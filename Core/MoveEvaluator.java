@@ -12,14 +12,14 @@ public class MoveEvaluator
     int[] mana = new int[colors];
     for(int i = 0; i<colors;i++)
       mana[i] = state.manaPool[player][i];
-    for(Land l:state.lands[player])
+    for(Permanent l:state.lands[player])
       mana[l.color]++;
 
     int totalMana = 0;
     for(int i = 0; i<colors; i++)
       totalMana+=mana[i];
 
-    ArrayList<Move> moveList = new ArrayList<Move>;
+    ArrayList<Move> moveList = new ArrayList<Move>();
     for(Card c:state.hand[player])
     {
       boolean canPlay = true;
@@ -38,5 +38,6 @@ public class MoveEvaluator
       if(canPlay)
         moveList.add(new Move(c));
     }
+    return moveList;
   }
 }

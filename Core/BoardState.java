@@ -1,4 +1,8 @@
 import java.util.ArrayList;
+import java.util.Scanner;
+import java.io.File;
+import java.io.IOException;
+import java.util.Random;
 public class BoardState
 {
   public static final int UNTAP = 0;
@@ -32,10 +36,10 @@ public class BoardState
 
   public BoardState()
   {
-    creatures = new ArrayList<Permanent>[players];
-    lands = new ArrayList<Permanent>[players];
-    library = new ArrayList<Card>[players];
-    hand = new ArrayList<Card[players];
+    creatures = new ArrayList[players];
+    lands = new ArrayList[players];
+    library = new ArrayList[players];
+    hand = new ArrayList[players];
 
     life = new int[players];
     manaPool = new int[players][colors];
@@ -55,10 +59,10 @@ public class BoardState
 
   public BoardState(BoardState old)
   {
-    creatures = new ArrayList<Permanent>[players];
-    lands = new ArrayList<Permanent>[players];
-    library = new ArrayList<Card>[players];
-    hand = new ArrayList<Card[players];
+    creatures = new ArrayList[players];
+    lands = new ArrayList[players];
+    library = new ArrayList[players];
+    hand = new ArrayList[players];
 
     life = new int[players];
     manaPool = new int[players][colors];
@@ -83,5 +87,48 @@ public class BoardState
 
     turn = old.turn;
     phase = old.phase;
+  }
+
+  public ArrayList<Card> loadDeck(String fname)
+  {
+    ArrayList<Card> ret = new ArrayList<Card>(60);
+    try
+    {
+      Scanner deckReader = new Scanner(new File(fname));
+      int num;
+      String line;
+      while(deckReader.hasNextLine())
+      {
+        line = deckReader.nextLine();
+        num = Integer.parseInt(line.substring(0,2));
+        line = line.substring(2);
+        for(int i=0;i<num;i++)
+          ret.add(new Card(line));
+      }
+      deckReader.close();
+    }
+    catch(IOException e)
+    {System.out.println("Error reading deck.");}
+    return ret;
+  }
+  
+  /* Randomization algorithm from Tic Tac Oh No random generator.
+   * Apparently this is something called "Fisher-Yates" or Knuths "Algorithm P",
+   * but those references were not used. */
+  public void shuffleDeck(int player)
+  {
+    Random rand = new Random();
+    ArrayList<Card> d = library[player];
+    int open = d.size();
+    int k;
+    Card temp;
+    for(int i=open;i>0;i--)
+    {
+      k = rand.nextInt(open);
+      temp = d.get(k);
+      open--;
+      d.set(k, d.get(open));
+      d.set(open, temp);
+    }
   }
 }

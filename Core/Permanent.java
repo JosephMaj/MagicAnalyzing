@@ -1,28 +1,27 @@
-import java.awt.BufferedImage;
+import java.awt.image.BufferedImage;
 public class Permanent
 {
+  public static final int LAND = 0x1;
+  public static final int CREATURE = 0x2;
+  public static final int ARTIFACT = 0x4;
+  public static final int ENCHANTMENT = 0x8;
+  public static final int PLANESWALKER = 0x10;
+
   public String name = "";
+  public int type;
   public String text = "";
-  public BufferedImage image;
-  public boolean creature;
-  public boolean land;
   public int color;
-  public Permanent(String nname, String ttext, int ncolor, BufferedImage nimage)
+  public BufferedImage image;
+  public Permanent(String nname, int ntype, String ntext, int ncolor)
   {
     name = nname;
-    text = ttext;
+    type = ntype;
+    text = ntext;
     color = ncolor;
-    image = nimage;
   }
+
   public Permanent(Permanent p)
   {
-    name = p.name;
-    text = p.text;
-    color = p.color;
-    image = p.image;
+    this(p.name,p.type,p.text,p.color);
   }
-}
-
-class Land extends Permanent
-{
 }
