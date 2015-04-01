@@ -3,8 +3,11 @@ public class MoveEvaluator
 {
   public static int colors = 6;
 
-  public MoveEvaluator()
+  public MoveEvaluator(ArrayList<Move> moves )
   {
+
+
+
   }
 
   public static ArrayList<Move> determineAvailableMoves(BoardState state, int player)

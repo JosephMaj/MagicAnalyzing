@@ -1,3 +1,4 @@
+
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.File;
@@ -131,4 +132,5 @@ public class BoardState
       d.set(open, temp);
     }
   }
+
 }
